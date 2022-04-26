@@ -1,0 +1,59 @@
+const express = require("express");
+const cors = require("cors");
+const { default: axios } = require("axios");
+const { processSets } = require("./utils/methods");
+
+const app = express();
+
+// parse requests of content-type: application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+
+app.use(cors()).use(express.json({ limit: "10mb" }));
+
+app.get("/places", async (req, res) => {
+  try {
+    const response = await axios.get(
+      "http://commonstandardsproject.com/api/v1/jurisdictions",
+      {
+        headers: {
+          "Api-Key": "iJPumbsW28WUebdtJ7eizmvK",
+        },
+      }
+    );
+
+    return res.json({
+      places: response.data.data,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error,
+    });
+  }
+});
+
+app.get("/place/:id", async (req, res) => {
+  try {
+    const { data } = await axios.get(
+      `http://commonstandardsproject.com/api/v1/jurisdictions/${req.params.id}`,
+      {
+        headers: {
+          "Api-Key": "iJPumbsW28WUebdtJ7eizmvK",
+        },
+      }
+    );
+
+    const sets = data.data.standardSets;
+    const csv = await processSets(sets);
+
+    return res.json({
+      csv,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      error,
+    });
+  }
+});
+
+app.listen(8080, () => console.log("Server running on 8080"));
