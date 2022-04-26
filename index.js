@@ -10,6 +10,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors()).use(express.json({ limit: "10mb" }));
 
+app.get("/", (req, res) => {
+  return res.send("Ready to be used");
+});
+
 app.get("/places", async (req, res) => {
   try {
     const response = await axios.get(
