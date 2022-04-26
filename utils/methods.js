@@ -1,7 +1,7 @@
 const { default: axios } = require("axios");
 
 const processSets = async (sets) => {
-  const rows = [];
+  const rows = [["SHORT_CODE", "TITLE", "GRADE", "SUBJECT", "DESCRIPTION"]];
   for (const set of sets) {
     const { data } = await axios.get(
       `http://commonstandardsproject.com/api/v1/standard_sets/${set.id}`
