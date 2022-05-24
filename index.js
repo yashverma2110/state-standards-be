@@ -1,6 +1,7 @@
 const express = require("express");
 const { default: axios } = require("axios");
 const { processSets } = require("./utils/methods");
+const cors = require("cors");
 
 const app = express();
 
