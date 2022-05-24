@@ -4,34 +4,7 @@ const { processSets } = require("./utils/methods");
 
 const app = express();
 
-app.use(function (req, res, next) {
-  var allowedOrigins = [
-    "http://localhost:3000",
-    "https://state-standards.vercel.app/",
-  ];
-  var origin = req.headers.origin;
-  if (allowedOrigins.indexOf(origin) > -1) {
-    res.header("Access-Control-Allow-Origin", origin);
-  } else {
-    res.header(
-      "Access-Control-Allow-Origin",
-      "https://state-standards.vercel.app//"
-    );
-  }
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
-  res.header("Access-Control-Expose-Headers", "Content-Length");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Accept, Authorization, Content-Type, X-Requested-With, Range"
-  );
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  } else {
-    return next();
-  }
-});
-
+app.use(cors({ origin: "*" }));
 app.use(express.json({ limit: "10mb" }));
 
 app.get("/", (req, res) => {
