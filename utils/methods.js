@@ -7,6 +7,10 @@ const processSets = async (sets) => {
       `http://commonstandardsproject.com/api/v1/standard_sets/${set.id}`
     );
 
+    set.title = set.title?.replace(/,/g, "");
+    set.description = set.description?.replace(/,/g, "");
+    set.subject = set.subject?.replace(/,/g, "");
+
     Object.values(data.data.standards).forEach((standard) => {
       rows.push([
         standard.statementNotation ||
@@ -14,7 +18,7 @@ const processSets = async (sets) => {
           standard.id ||
           "<short code not found>",
         set.title || "<title not found>",
-        set.educationLevels.join(","),
+        set.educationLevels.join(" and "),
         set.subject,
         standard.description || "",
       ]);
