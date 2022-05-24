@@ -8,7 +8,7 @@ const app = express();
 // parse requests of content-type: application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors()).use(express.json({ limit: "10mb" }));
+app.use(cors({ origin: "*" })).use(express.json({ limit: "10mb" }));
 
 app.get("/", (req, res) => {
   return res.send("Ready to be used");
