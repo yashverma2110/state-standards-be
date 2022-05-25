@@ -12,14 +12,15 @@ const processSets = async (sets) => {
     set.subject = set.subject?.replace(/,/g, "");
 
     Object.values(data.data.standards).forEach((standard) => {
-      if (!standard.statementNotation) {
-        return;
-      }
       rows.push([
-        standard.statementNotation || set.title || "<title not found>",
+        standard.statementNotation ||
+          standard.asnIdentifier ||
+          standard.id ||
+          "<short code not found>",
+        set.title || set.description,
         set.educationLevels.join(" and "),
         set.subject,
-        standard.description || "",
+        set.title ? standard.description || "" : "",
       ]);
     });
   }
