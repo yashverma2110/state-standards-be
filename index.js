@@ -1,16 +1,17 @@
 const express = require('express');
 const controllers = require('./controllers');
+const cors = require('cors');
 
 const app = express();
 const PORT = 3000;
 
-app.use(function (req, res, next) {
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
-  } else {
-    return next();
-  }
-});
+app.use(
+  cors({
+    origin: (origin, cb) => {
+      cb(null, origin);
+    },
+  })
+);
 
 app.use(express.json({ limit: '10mb' }));
 
