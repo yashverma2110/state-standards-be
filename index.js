@@ -1,15 +1,16 @@
 const express = require('express');
-const cors = require('cors');
 const controllers = require('./controllers');
 
 const app = express();
 const PORT = 3000;
 
-var corsOptionsDelegate = function (req, callback) {
-  callback(null, { origin: true }); // callback expects two parameters: error and options
-};
-
-app.use(cors(corsOptionsDelegate));
+app.use(function (req, res, next) {
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  } else {
+    return next();
+  }
+});
 
 app.use(express.json({ limit: '10mb' }));
 
