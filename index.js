@@ -5,11 +5,14 @@ const cors = require('cors');
 const app = express();
 const PORT = 3000;
 
+app.use(function (req, res, next) {
+  req.headers.origin = 'http://localhost:3001';
+  next();
+});
+
 app.use(
   cors({
-    origin: (origin, cb) => {
-      cb(null, origin);
-    },
+    origin: () => ({ origin: true }),
   })
 );
 
