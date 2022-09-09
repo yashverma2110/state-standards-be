@@ -1,3 +1,6 @@
+const { default: axios } = require('axios');
+const { processSets } = require('../utils/methods');
+
 const indexRoute = (req, res) => {
   return res.send('Ready to be used');
 };
