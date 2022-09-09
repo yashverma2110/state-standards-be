@@ -1,11 +1,16 @@
 const express = require('express');
+const cors = require('cors');
 const controllers = require('./controllers');
 
 const app = express();
 const PORT = 3000;
-app.use((req, callback) => {
-  callback(null, { origin: true });
-});
+
+var corsOptionsDelegate = function (req, callback) {
+  callback(null, { origin: true }); // callback expects two parameters: error and options
+};
+
+app.use(cors(corsOptionsDelegate));
+
 app.use(express.json({ limit: '10mb' }));
 
 const attachGet = (path, router) => {
